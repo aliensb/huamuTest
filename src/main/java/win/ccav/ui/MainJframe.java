@@ -55,7 +55,8 @@ public class MainJframe extends JFrame {
 	private String userid;
 	private JTextField companyName;
 	private JTextField keyWord;
-//	private List<win.ccav.model.Type> prices;
+	private JComboBox priceCom;
+	//	private List<win.ccav.model.Type> prices;
 	private Map<Integer, win.ccav.model.Type> prices=new HashMap<>();
 
 	@Autowired
@@ -63,6 +64,9 @@ public class MainJframe extends JFrame {
 
 	@Autowired
 	private HuaManage huaManage;
+
+	@Autowired
+	private OrderManage orderManage;
 
 	public void setUserid(String userid) {
 		this.userid = userid;
@@ -77,6 +81,16 @@ public class MainJframe extends JFrame {
 	@Autowired
 	private TypeReponsitory typeReponsitory;
 
+
+
+	public OrderManage getOrderManage() {
+		return orderManage;
+	}
+
+	public void setOrderManage(OrderManage orderManage) {
+		this.orderManage = orderManage;
+	}
+
 	private String defaultPicAddress;
 
 	//用于存放当前选择的花木
@@ -90,6 +104,7 @@ public class MainJframe extends JFrame {
 		nameCom.setModel(new DefaultComboBoxModel(names.toArray(new Hua [names.size()])));
 		typeCom.setModel(new DefaultComboBoxModel(types.toArray(new win.ccav.model.Type[types.size()])));
 		specialCom.setModel(new DefaultComboBoxModel(specialHuas.toArray(new Hua[specialHuas.size()])));
+		priceCom.setModel(new DefaultComboBoxModel(types.toArray(new win.ccav.model.Type[types.size()])));
 //		String selectType =   ((win.ccav.model.Type)typeCom.getSelectedItem()).getTypeName();
 //		String selectName = ((Hua)nameCom.getSelectedItem()).getHname();
 		//Hua model=huaReponsitory.findFirstByHnameAndType(selectName,selectType);
@@ -101,6 +116,7 @@ public class MainJframe extends JFrame {
 		for (win.ccav.model.Type type : typeReponsitory.findAll()){
 			prices.put(type.getId(),type);
 		}
+		priceFiled.setText(prices.get(((win.ccav.model.Type)priceCom.getSelectedItem()).getId()).getUnitPrice().toString());
 	}
 
 	/**
@@ -133,8 +149,10 @@ public class MainJframe extends JFrame {
 		menuBar.add(mnNewMenu);
 
 		JMenuItem menuItem = new JMenuItem("花木管理");
+		MainJframe thisMain=this;
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				huaManage.setMainJframe(thisMain);
 				huaManage.setVisible(true);
 			}
 		});
@@ -155,6 +173,7 @@ public class MainJframe extends JFrame {
 				//TODO OrderManage
 //				OrderManage orderMView=new OrderManage();
 //				orderMView.setVisible(true);
+				orderManage.setVisible(true);
 			}
 		});
 		mnNewMenu.add(menuItem_1);
@@ -300,6 +319,26 @@ public class MainJframe extends JFrame {
 		});
 		
 		JLabel label_9 = new JLabel("快选：");
+		
+		JButton priceButton = new JButton("修改单价");
+		priceButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				priceConfirm();
+			}
+
+		});
+		
+		priceFiled = new JTextField();
+		priceFiled.setColumns(10);
+		
+		priceCom = new JComboBox();
+		priceCom.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					priceChange();
+				}
+			}
+		});
 
 		//JDesktopPane desktopPane = new JDesktopPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -307,7 +346,13 @@ public class MainJframe extends JFrame {
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1096, Short.MAX_VALUE)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(717, Short.MAX_VALUE)
+					.addContainerGap(418, Short.MAX_VALUE)
+					.addComponent(priceCom, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(priceFiled, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(priceButton)
+					.addGap(18)
 					.addComponent(keyWord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btnNewButton)
@@ -374,7 +419,7 @@ public class MainJframe extends JFrame {
 									.addComponent(companyName, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)))))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(button_2, GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
 						.addComponent(button, GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
 					.addGap(8))
 		);
@@ -419,7 +464,10 @@ public class MainJframe extends JFrame {
 						.addComponent(btnexcel)
 						.addComponent(button_1)
 						.addComponent(btnNewButton)
-						.addComponent(keyWord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(keyWord, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(priceButton)
+						.addComponent(priceFiled, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(priceCom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(5))
 		);
 
@@ -441,6 +489,8 @@ public class MainJframe extends JFrame {
 //		unitPrice.setText(String.valueOf(model.getUnitPrice()));
 //		chengbengLab.setText(String.valueOf(model.getChengBen()));
 	}
+
+
 
 	private void specialChange() {
 		currentSelectHuaMode=(Hua) specialCom.getSelectedItem();
@@ -725,6 +775,7 @@ public class MainJframe extends JFrame {
 	}
 	List<Integer> searchResult=new ArrayList<Integer>();
 	int searchIndex=0;
+	private JTextField priceFiled;
 	private void search(){
 		searchResult.clear();
 		int row=mainTable.getSelectedRow();
@@ -775,6 +826,25 @@ public class MainJframe extends JFrame {
 			lists.add(sh);
 		}
 		return lists;
+	}
+	
+	private void priceChange() {
+		win.ccav.model.Type selectType= (win.ccav.model.Type) priceCom.getSelectedItem();
+		priceFiled.setText(prices.get(selectType.getId()).getUnitPrice().toString());
+//		prices.put(selectType.getId(),);
+	}
+
+	private void priceConfirm() {
+		if(!StringUtil.isDouble(priceFiled.getText())){
+			JOptionPane.showMessageDialog(null, "请输入正确的数字");
+			return;
+		}
+		win.ccav.model.Type selectType= (win.ccav.model.Type) priceCom.getSelectedItem();
+		prices.get(selectType.getId()).setUnitPrice(new Float(priceFiled.getText()));
+	}
+	protected void updateSpecialCom(){
+		specialHuas=huaReponsitory.findAllBySpecial(1);
+		specialCom.setModel(new DefaultComboBoxModel(specialHuas.toArray(new Hua[specialHuas.size()])));
 	}
 }
 

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import win.ccav.ui.HuaManage;
 import win.ccav.ui.LoginJframe;
 import win.ccav.ui.MainJframe;
+import win.ccav.ui.OrderManage;
 
 /**
  * Created by Administrator on 2017/11/29.
@@ -29,5 +30,10 @@ public class AppConfig {
     @Bean(initMethod ="init")
     public HuaManage huaManage(){
         return new HuaManage();
+    }
+
+    @Bean(initMethod = "init")
+    public OrderManage orderManage(){
+        return new OrderManage();
     }
 }

@@ -54,6 +54,12 @@ public class HuaManage extends JFrame {
     @Autowired
     private TypeReponsitory typeReponsitory;
 
+    private MainJframe mainJframe;
+
+    public void setMainJframe(MainJframe mainJframe) {
+        this.mainJframe = mainJframe;
+    }
+
     public void init() {
         types = typeReponsitory.findAll();
         names=huaReponsitory.findAllByTypeId(types.get(0).getId());
@@ -168,84 +174,94 @@ public class HuaManage extends JFrame {
                 deleteHua();
             }
         });
+        
+        JButton btnNewButton = new JButton("设为快选");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		specialConfirm();
+        	}
+        });
         GroupLayout gl_desktopPane = new GroupLayout(desktopPane);
         gl_desktopPane.setHorizontalGroup(
-                gl_desktopPane.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_desktopPane.createSequentialGroup()
-                                .addGap(55)
-                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(label_3, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(gl_desktopPane.createSequentialGroup()
-                                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(label_5)
-                                                        .addComponent(label_6)
-                                                        .addGroup(gl_desktopPane.createSequentialGroup()
-                                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
-                                                                        .addComponent(label, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(label_4))))
-                                                .addGap(18)
-                                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING, false)
-                                                        .addComponent(chengbenText, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                                        .addComponent(unitPriceText, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                                        .addComponent(typeText, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                                        .addComponent(nameText, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                                        .addComponent(typeCom, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(75)
-                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
-                                        .addGroup(gl_desktopPane.createSequentialGroup()
-                                                .addComponent(label_1, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                .addComponent(nameCom, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(gl_desktopPane.createSequentialGroup()
-                                                .addComponent(picLabel, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18)
-                                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(button_3, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                                                        .addComponent(button, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                                                        .addComponent(button_2, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                                                        .addComponent(button_1, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))))
-                                .addGap(18))
+        	gl_desktopPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_desktopPane.createSequentialGroup()
+        			.addGap(55)
+        			.addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
+        				.addComponent(label_3, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+        				.addGroup(gl_desktopPane.createSequentialGroup()
+        					.addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
+        						.addComponent(label_5)
+        						.addComponent(label_6)
+        						.addGroup(gl_desktopPane.createSequentialGroup()
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
+        								.addComponent(label, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(label_4))))
+        					.addGap(18)
+        					.addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING, false)
+        						.addComponent(chengbenText, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+        						.addComponent(unitPriceText, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+        						.addComponent(typeText, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+        						.addComponent(nameText, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+        						.addComponent(typeCom, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        			.addGap(75)
+        			.addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_desktopPane.createSequentialGroup()
+        					.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(nameCom, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(gl_desktopPane.createSequentialGroup()
+        					.addComponent(picLabel, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
+        					.addGap(18)
+        					.addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
+        						.addComponent(button_3, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+        						.addComponent(button, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+        						.addComponent(button_2, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+        						.addComponent(button_1, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+        						.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))))
+        			.addGap(18))
         );
         gl_desktopPane.setVerticalGroup(
-                gl_desktopPane.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_desktopPane.createSequentialGroup()
-                                .addGap(23)
-                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(label)
-                                        .addComponent(typeCom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(label_1)
-                                        .addComponent(nameCom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(50)
-                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.TRAILING)
-                                        .addComponent(picLabel, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(gl_desktopPane.createSequentialGroup()
-                                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.BASELINE)
-                                                        .addComponent(typeText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(label_4))
-                                                .addGap(18)
-                                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(nameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(gl_desktopPane.createSequentialGroup()
-                                                                .addGap(3)
-                                                                .addComponent(label_3)))
-                                                .addGap(18)
-                                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(label_5)
-                                                        .addComponent(unitPriceText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(18)
-                                                .addGroup(gl_desktopPane.createParallelGroup(Alignment.BASELINE)
-                                                        .addComponent(label_6)
-                                                        .addComponent(chengbenText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(gl_desktopPane.createSequentialGroup()
-                                                .addComponent(button)
-                                                .addGap(14)
-                                                .addComponent(button_3)
-                                                .addGap(18)
-                                                .addComponent(button_2)
-                                                .addGap(16)
-                                                .addComponent(button_1)))
-                                .addContainerGap(68, Short.MAX_VALUE))
+        	gl_desktopPane.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_desktopPane.createSequentialGroup()
+        			.addGap(23)
+        			.addGroup(gl_desktopPane.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(label)
+        				.addComponent(typeCom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(label_1)
+        				.addComponent(nameCom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(50)
+        			.addGroup(gl_desktopPane.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(picLabel, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+        				.addGroup(gl_desktopPane.createSequentialGroup()
+        					.addGroup(gl_desktopPane.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(typeText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(label_4))
+        					.addGap(18)
+        					.addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
+        						.addComponent(nameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        						.addGroup(gl_desktopPane.createSequentialGroup()
+        							.addGap(3)
+        							.addComponent(label_3)))
+        					.addGap(18)
+        					.addGroup(gl_desktopPane.createParallelGroup(Alignment.LEADING)
+        						.addComponent(label_5)
+        						.addComponent(unitPriceText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addGap(18)
+        					.addGroup(gl_desktopPane.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(label_6)
+        						.addComponent(chengbenText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        				.addGroup(gl_desktopPane.createSequentialGroup()
+        					.addComponent(button)
+        					.addGap(14)
+        					.addComponent(button_3)
+        					.addGap(18)
+        					.addComponent(button_2)
+        					.addGap(16)
+        					.addComponent(button_1)))
+        			.addGap(18)
+        			.addComponent(btnNewButton)
+        			.addContainerGap(38, Short.MAX_VALUE))
         );
         desktopPane.setLayout(gl_desktopPane);
         //this.add(new PicPanel());
@@ -495,5 +511,11 @@ public class HuaManage extends JFrame {
         }
         icon = new ImageIcon(icon.getImage().getScaledInstance(reImgWidth, reImgHeight, Image.SCALE_DEFAULT));
         return icon;
+    }
+    private void specialConfirm(){
+    	currentSelectHua.setSpecial(1);
+    	huaReponsitory.save(currentSelectHua);
+        mainJframe.updateSpecialCom();
+        JOptionPane.showMessageDialog(null, "添加成功");
     }
 }
