@@ -58,6 +58,16 @@ public class MainJframe extends JFrame {
 	private JComboBox priceCom;
 	//	private List<win.ccav.model.Type> prices;
 	private Map<Integer, win.ccav.model.Type> prices=new HashMap<>();
+	@Autowired
+	private TypeManage typeManage;
+
+	public TypeManage getTypeManage() {
+		return typeManage;
+	}
+
+	public void setTypeManage(TypeManage typeManage) {
+		this.typeManage = typeManage;
+	}
 
 	@Autowired
 	private Environment env;
@@ -161,8 +171,7 @@ public class MainJframe extends JFrame {
 		JMenuItem menuItem_2 = new JMenuItem("类型管理");
 		menuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				TypeManage typeView=new TypeManage();
-//				typeView.setVisible(true);
+				typeManage.setVisible(true);
 			}
 		});
 		mnNewMenu.add(menuItem_2);
@@ -170,7 +179,6 @@ public class MainJframe extends JFrame {
 		JMenuItem menuItem_1 = new JMenuItem("订单管理");
 		menuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO OrderManage
 //				OrderManage orderMView=new OrderManage();
 //				orderMView.setVisible(true);
 				orderManage.setVisible(true);

@@ -43,8 +43,8 @@ public class HuaManage extends JFrame {
     private String picAddress;
     private String defaultPicAddress;
     private String picSavePath;
-
     private Hua currentSelectHua;
+
 
     @Autowired
     private HuaReponsitory huaReponsitory;

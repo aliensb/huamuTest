@@ -4,10 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import win.ccav.ui.HuaManage;
-import win.ccav.ui.LoginJframe;
-import win.ccav.ui.MainJframe;
-import win.ccav.ui.OrderManage;
+import win.ccav.ui.*;
 
 /**
  * Created by Administrator on 2017/11/29.
@@ -35,5 +32,9 @@ public class AppConfig {
     @Bean(initMethod = "init")
     public OrderManage orderManage(){
         return new OrderManage();
+    }
+    @Bean(initMethod = "init")
+    public TypeManage typeManage(){
+        return new TypeManage();
     }
 }
